@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETA - General Contracting & Supplies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a5490;
+            --secondary: #2c7ac2;
+            --accent: #ff6b35;
+            --dark: #0f2a3f;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --error: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        body[dir="rtl"] {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .lang-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(26,84,144,0.9), rgba(44,122,194,0.9)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231a5490" width="1200" height="600"/><path fill="%232c7ac2" opacity="0.3" d="M0,300 Q300,100 600,300 T1200,300 L1200,600 L0,600 Z"/></svg>');
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 70px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-btn {
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,53,0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, var(--light), white);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .project-value {
+            color: var(--success);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: var(--error);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .success-message {
+            background: var(--success);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .services-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">ETA</div>
+            <ul class="nav-links">
+                <li><a href="#about" data-en="About" data-ar="من نحن">About</a></li>
+                <li><a href="#services" data-en="Services" data-ar="خدماتنا">Services</a></li>
+                <li><a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
+                <li><a href="#contact" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+            </ul>
+            <button class="lang-toggle" onclick="toggleLanguage()">عربي</button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 data-en="Building Excellence Since 2022" data-ar="نبني التميز منذ 2022">Building Excellence Since 2022</h1>
+            <p data-en="ETA for General Contracting and General Supplies" data-ar="إيتا للمقاولات العامة والتوريدات العمومية">ETA for General Contracting and General Supplies</p>
+            <button class="cta-btn" onclick="scrollToContact()" data-en="Get Started" data-ar="ابدأ معنا">Get Started</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title" data-en="About Us" data-ar="من نحن">About Us</h2>
+        <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+            <span data-en="ETA is a leading Egyptian company established in February 2022, specializing in providing integrated solutions in contracting and procurement. We deliver high-quality services covering architectural, civil, electrical, and mechanical works." data-ar="إيتا هي شركة مصرية رائدة تأسست في فبراير 2022، متخصصة في تقديم حلول متكاملة في مجالات المقاولات والتوريدات. نقدم خدمات عالية الجودة تغطي الأعمال المعمارية والمدنية والكهربائية والميكانيكية.">
+                ETA is a leading Egyptian company established in February 2022, specializing in providing integrated solutions in contracting and procurement. We deliver high-quality services covering architectural, civil, electrical, and mechanical works.
+            </span>
+        </p>
+    </section>
+
+    <section id="services" style="background: var(--light);">
+        <h2 class="section-title" data-en="Our Services" data-ar="خدماتنا">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🏗️</div>
+                <h3 data-en="Integrated Contracting" data-ar="المقاولات المتكاملة">Integrated Contracting</h3>
+                <p data-en="Architectural & civil works, finishing, construction, insulation, and renovations." data-ar="أعمال معمارية ومدنية، تشطيبات، إنشاءات، عزل، وترميمات.">Architectural & civil works, finishing, construction, insulation, and renovations.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3 data-en="Electrical Works" data-ar="الأعمال الكهربائية">Electrical Works</h3>
+                <p data-en="Solar power systems, control panels, emergency generators, and specialized lighting." data-ar="أنظمة الطاقة الشمسية، لوحات التحكم، المولدات الطارئة، والإضاءة المتخصصة.">Solar power systems, control panels, emergency generators, and specialized lighting.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">❄️</div>
+                <h3 data-en="Mechanical Works" data-ar="الأعمال الميكانيكية">Mechanical Works</h3>
+                <p data-en="HVAC systems, fire networks, plumbing, and mechanical installations." data-ar="أنظمة التكييف والتهوية، شبكات الحريق، السباكة، والتركيبات الميكانيكية.">HVAC systems, fire networks, plumbing, and mechanical installations.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📦</div>
+                <h3 data-en="General Supplies" data-ar="التوريدات العمومية">General Supplies</h3>
+                <p data-en="Supply and installation of specialized equipment, building materials, and operational supplies." data-ar="توريد وتركيب المعدات المتخصصة ومواد البناء ومستلزمات التشغيل.">Supply and installation of specialized equipment, building materials, and operational supplies.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title" data-en="Key Projects" data-ar="المشاريع الرئيسية">Key Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3 data-en="Nefertari Hotel - Egoth" data-ar="فندق نفرتاري - إيجوث">Nefertari Hotel - Egoth</h3>
+                <p data-en="Renovation and electromechanical finishing for 100 rooms" data-ar="تجديد وتشطيبات إلكتروميكانيكية لـ 100 غرفة">Renovation and electromechanical finishing for 100 rooms</p>
+                <div class="project-value">43,344,868 EGP</div>
+            </div>
+            <div class="project-card">
+                <h3 data-en="Cataract Hotel" data-ar="فندق كتراكت">Cataract Hotel</h3>
+                <p data-en="Fire line repair, kitchen AC system, and parquet renovation" data-ar="إصلاح خط الحريق، نظام تكييف المطبخ، وتجديد الباركيه">Fire line repair, kitchen AC system, and parquet renovation</p>
+                <div class="project-value">407,835 EGP</div>
+            </div>
+            <div class="project-card">
+                <h3 data-en="Movenpick Resort Aswan" data-ar="منتجع موڤنبيك أسوان">Movenpick Resort Aswan</h3>
+                <p data-en="Swimming pool maintenance and surrounding area development" data-ar="صيانة حمام السباحة وتطوير المنطقة المحيطة">Swimming pool maintenance and surrounding area development</p>
+                <div class="project-value">80,000 EGP</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: var(--light);">
+        <h2 class="section-title" data-en="Contact Us" data-ar="اتصل بنا">Contact Us</h2>
+        <div class="contact-form">
+            <div class="success-message" id="successMsg">
+                <span data-en="Thank you! Your message has been sent successfully." data-ar="شكراً! تم إرسال رسالتك بنجاح.">Thank you! Your message has been sent successfully.</span>
+            </div>
+            <form id="contactForm" action="https://formspree.io/f/xeorlozl" method="POST" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label data-en="Name" data-ar="الاسم">Name</label>
+                    <input type="text" name="name" id="name" required>
+                    <div class="error-message" data-en="Please enter your name" data-ar="الرجاء إدخال اسمك">Please enter your name</div>
+                </div>
+                <div class="form-group">
+                    <label data-en="Email" data-ar="البريد الإلكتروني">Email</label>
+                    <input type="email" name="email" id="email" required>
+                    <div class="error-message" data-en="Please enter a valid email" data-ar="الرجاء إدخال بريد إلكتروني صحيح">Please enter a valid email</div>
+                </div>
+                <div class="form-group">
+                    <label data-en="Phone" data-ar="الهاتف">Phone</label>
+                    <input type="tel" name="phone" id="phone">
+                    <div class="error-message" data-en="Please enter a valid phone number" data-ar="الرجاء إدخال رقم هاتف صحيح">Please enter a valid phone number</div>
+                </div>
+                <div class="form-group">
+                    <label data-en="Message" data-ar="الرسالة">Message</label>
+                    <textarea name="message" id="message" rows="5" required></textarea>
+                    <div class="error-message" data-en="Please enter your message" data-ar="الرجاء إدخال رسالتك">Please enter your message</div>
+                </div>
+                <input type="hidden" name="_subject" value="New Contact Form Submission - ETA Company">
+                <!-- <input type="hidden" name="_cc" value="ibrahimqudry@gmail.com"> -->
+                <button type="submit" class="cta-btn" id="submitBtn">
+                    <span data-en="Send Message" data-ar="إرسال الرسالة">Send Message</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 data-en="Contact Information" data-ar="معلومات الاتصال">Contact Information</h3>
+                <p>📍 89 Corniche El Nile Street, Aswan, Egypt</p>
+                <p>📧 sales@etacompany.org</p>
+                <p>📱 +20 1100014606</p>
+            </div>
+            <div class="footer-section">
+                <h3 data-en="Company Details" data-ar="تفاصيل الشركة">Company Details</h3>
+                <p data-en="Commercial Register: 8486" data-ar="السجل التجاري: 8486">Commercial Register: 8486</p>
+                <p data-en="Tax ID: 538537795" data-ar="الرقم الضريبي: 538537795">Tax ID: 538537795</p>
+                <p data-en="Established: February 2022" data-ar="تأسست: فبراير 2022">Established: February 2022</p>
+            </div>
+        </div>
+        <p>&copy; 2024 ETA Company. <span data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">All rights reserved.</span></p>
+    </footer>
+
+    <script>
+        let currentLang = 'en';
+
+        // Language Toggle with Error Handling
+        function toggleLanguage() {
+            try {
+                currentLang = currentLang === 'en' ? 'ar' : 'en';
+                const body = document.body;
+                const langBtn = document.querySelector('.lang-toggle');
+                
+                body.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+                body.setAttribute('lang', currentLang);
+                langBtn.textContent = currentLang === 'en' ? 'عربي' : 'English';
+                
+                // Update all translatable elements
+                document.querySelectorAll('[data-en]').forEach(el => {
+                    el.textContent = el.getAttribute(`data-${currentLang}`);
+                });
+            } catch (error) {
+                console.error('Language toggle error:', error);
+                alert('Error switching language. Please refresh the page.');
+            }
+        }
+
+        // Smooth Scroll with Error Handling
+        function scrollToContact() {
+            try {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    throw new Error('Contact section not found');
+                }
+            } catch (error) {
+                console.error('Scroll error:', error);
+                window.location.hash = '#contact';
+            }
+        }
+
+        // Form Validation with Error Handling
+        function validateForm() {
+            let isValid = true;
+            
+            try {
+                const name = document.getElementById('name');
+                const email = document.getElementById('email');
+                const phone = document.getElementById('phone');
+                const message = document.getElementById('message');
+                
+                // Clear previous errors
+                document.querySelectorAll('.form-group').forEach(group => {
+                    group.classList.remove('error');
+                });
+                
+                // Name validation
+                if (!name.value.trim() || name.value.length < 2) {
+                    name.closest('.form-group').classList.add('error');
+                    isValid = false;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email.value)) {
+                    email.closest('.form-group').classList.add('error');
+                    isValid = false;
+                }
+                
+                // Phone validation (optional but if provided, must be valid)
+                if (phone.value && !/^[\d\s\+\-\(\)]+$/.test(phone.value)) {
+                    phone.closest('.form-group').classList.add('error');
+                    isValid = false;
+                }
+                
+                // Message validation
+                if (!message.value.trim() || message.value.length < 10) {
+                    message.closest('.form-group').classList.add('error');
+                    isValid = false;
+                }
+                
+                return isValid;
+            } catch (error) {
+                console.error('Validation error:', error);
+                alert('Form validation error. Please check your inputs.');
+                return false;
+            }
+        }
+
+        // Form Submission with Error Handling
+        async function handleSubmit(event) {
+            event.preventDefault();
+            if (!validateForm()) return false;
+
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMsg');
+            const formData = new FormData(form);
+
+            // Show loading spinner
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Sending...</span><div class="spinner"></div>';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    successMsg.classList.add('show');
+                    form.reset();
+                    setTimeout(() => successMsg.classList.remove('show'), 5000);
+                } else {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Form submission failed');
+                }
+            } catch (err) {
+                alert('Failed to send. Please email us directly at sales@etacompany.org');
+                console.error('Submission error:', err);
+            } finally {
+                // Restore button text
+                const btnText = currentLang === 'en' ? 'Send Message' : 'إرسال الرسالة';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>${btnText}</span>`;
+            }
+
+            return false;
+        }
+
+        // Smooth scroll for navigation links with Error Handling
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        try {
+                            e.preventDefault();
+                            const target = document.querySelector(this.getAttribute('href'));
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        } catch (error) {
+                            console.error('Navigation error:', error);
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Event listener initialization error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
