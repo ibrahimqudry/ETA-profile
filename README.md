@@ -1,4 +1,3 @@
-
 ## Key Sections
 
 - **Hero**: Company introduction and call-to-action
