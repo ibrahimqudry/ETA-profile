@@ -1,0 +1,55 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+debug.log
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Build and cache directories
+.dist/
+dist/
+build/
+out/
+.tmp/
+tmp/
+.temp/
+.cache/
+coverage/
+
+# Environment files
+.env
+.env.*
+*.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor and IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo
+
+# Sass cache
+.sass-cache/
+
+# Archives and packages
+*.zip
+*.tar
+*.tgz
+
+# Misc
+*.pid
+*.seed
