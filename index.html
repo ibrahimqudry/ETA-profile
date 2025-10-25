@@ -13,14 +13,17 @@
 <body>
     <header>
         <nav>
-            <div class="logo">ETA</div>
+            <div class="toggle-container">
+                <div class="logo">ETA</div>
+                <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+            </div>
             <ul class="nav-links">
                 <li><a href="#about" data-en="About" data-ar="من نحن">About</a></li>
                 <li><a href="#services" data-en="Services" data-ar="خدماتنا">Services</a></li>
                 <li><a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
                 <li><a href="#contact" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
             </ul>
-            <button class="lang-toggle" onclick="toggleLanguage()">عربي</button>
+            <button class="lang-toggle" onclick="toggleLanguage()" dir="rtl">عربي</button>
         </nav>
     </header>
 

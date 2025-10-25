@@ -5,6 +5,7 @@ function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'ar' : 'en';
     document.documentElement.setAttribute('lang', currentLang);
     document.body.setAttribute('dir', currentLang === 'en' ? 'ltr' : 'rtl');
+    document.querySelector('.lang-toggle').setAttribute('dir', currentLang === 'en' ? 'ltr' : 'rtl');
     
     // Update button text
     const langToggle = document.querySelector('.lang-toggle');
@@ -146,64 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const gray = '#9ca3af';
     const lightGray = '#e5e7eb';
 
-    // Client distribution pie
-    const clientCanvas = document.getElementById('clientDistribution');
-    if (clientCanvas && window.Chart) {
-        new Chart(clientCanvas, {
-            type: 'pie',
-            data: {
-                labels: [
-                    'Cataract Hotel',
-                    'Nefertari Hotel (EGOTH)',
-                    'Movenpick Resort',
-                    'Arab Academy',
-                    'Aswan University',
-                    'Others'
-                ],
-                datasets: [{
-                    data: [25, 30, 10, 5, 5, 25], // placeholder percentages
-                    backgroundColor: [accent, dark, '#ef4444', gray, '#6b7280', lightGray],
-                    borderColor: '#fff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: { position: 'bottom', labels: { boxWidth: 12 } },
-                    tooltip: { enabled: true }
-                }
-            }
-        });
-    }
-
-    // Hotel projects distribution pie
-    const hotelCanvas = document.getElementById('hotelProjectsChart');
-    if (hotelCanvas && window.Chart) {
-        new Chart(hotelCanvas, {
-            type: 'pie',
-            data: {
-                labels: [
-                    'Cataract Hotel',
-                    'Nefertari Hotel (EGOTH)',
-                    'Movenpick Resort',
-                    'Other Hotel Projects'
-                ],
-                datasets: [{
-                    data: [3, 7, 2, 4], // placeholder counts
-                    backgroundColor: [accent, dark, '#ef4444', gray],
-                    borderColor: '#fff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: { position: 'bottom', labels: { boxWidth: 12 } },
-                    tooltip: { enabled: true }
-                }
-            }
-        });
-    }
-
     // Major hotel projects distribution pie
     const majorHotelCanvas = document.getElementById('majorHotelProjectsChart');
     if (majorHotelCanvas && window.Chart) {
@@ -229,23 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     tooltip: { enabled: true }
                 }
             }
-        });
-    }
-
-    // Clients by sector pie
-    const sectorCanvas = document.getElementById('clientSectorChart');
-    if (sectorCanvas && window.Chart) {
-        new Chart(sectorCanvas, {
-            type: 'pie',
-            data: {
-                labels: ['Hotels & Hospitality', 'Educational Institutions', 'Industrial Companies', 'Government Entities'],
-                datasets: [{
-                    data: [45, 20, 25, 10],
-                    backgroundColor: [accent, '#ef4444', dark, '#9ca3af'],
-                    borderColor: '#fff', borderWidth: 2
-                }]
-            },
-            options: { plugins: { legend: { position: 'bottom' } } }
         });
     }
 
@@ -283,6 +209,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 scales: { y: { beginAtZero: true } },
                 plugins: { legend: { display: false }, tooltip: { enabled: true } }
             }
+        });
+    }
+
+    // Mobile nav toggle
+    const nav = document.querySelector('header nav');
+    const menuToggle = document.querySelector('.menu-toggle');
+    if (nav && menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            document.body.classList.toggle('nav-open', isOpen);
+        });
+        // Close menu when clicking a nav link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (nav.classList.contains('open')) {
+                    nav.classList.remove('open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.classList.remove('nav-open');
+                }
+            });
         });
     }
 });
